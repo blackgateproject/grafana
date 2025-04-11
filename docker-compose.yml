@@ -2,9 +2,13 @@ version: "3"
 
 services:
   grafana:
-    image: grafana/grafana:latest
+    build: .
     ports:
       - "3000:3000"
     volumes:
-      - ./grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana.db:/var/lib/grafana/grafana.db
+      - grafana-config:/etc/grafana
+      - grafana-data:/var/lib/grafana
+
+volumes:
+  grafana-config:
+  grafana-data:
