@@ -11,6 +11,5 @@ RUN chmod 644 /etc/grafana/grafana.ini && \
     # Use numeric IDs for user:group (472 is typically the grafana user)
     chown 472:0 /etc/grafana/grafana.ini && \
     chown 472:472 /var/lib/grafana/grafana.db
-
 # Switch back to the non-root user (grafana)
 USER 472
