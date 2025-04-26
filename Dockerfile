@@ -1,15 +1,19 @@
 FROM grafana/grafana:latest
 
-# Copy configuration files
-COPY grafana.ini /etc/grafana/grafana.ini
-COPY grafana.db /var/lib/grafana/grafana.db
-
-# Set proper permissions using numeric IDs instead of user/group names
 USER root
-RUN chmod 644 /etc/grafana/grafana.ini && \
-    chmod 660 /var/lib/grafana/grafana.db && \
-    # Use numeric IDs for user:group (472 is typically the grafana user)
-    chown 472:0 /etc/grafana/grafana.ini && \
-    chown 472:472 /var/lib/grafana/grafana.db
-# Switch back to the non-root user (grafana)
-USER 472
+
+# Create environment config directories
+RUN mkdir -p /opt/grafana/config/local \
+             /opt/grafana/config/public \
+             /opt/grafana/config/server
+
+# Copy configurations for each environment
+COPY ./config/local/ /opt/grafana/config/local/
+COPY ./config/public/ /opt/grafana/config/public/
+COPY ./config/server/ /opt/grafana/config/server/
+
+# Add our custom entrypoint script
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
