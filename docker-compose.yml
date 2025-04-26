@@ -4,7 +4,7 @@ services:
     ports:
       - "10004:3000"
     environment:
-      - GRAFANA_ENV=${GRAFANA_ENV:-public} # Default to server if not specified
+      - GRAFANA_ENV=${GRAFANA_ENV:-server} # Default to server if not specified
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
